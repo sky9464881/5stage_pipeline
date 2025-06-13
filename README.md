@@ -112,6 +112,7 @@ This project began with a simple FSM-based single-cycle CPU model and was progre
 ### Step 1: 3-Stage Pipeline Design
 
 The initia![image](https://github.com/user-attachments/assets/17f7169c-3d79-4faa-980b-e737875eae51)
+
 l FSM-based codebase was modular, with separate modules like `alu.v`, `controller.v`, `accum.v`, `addr_mux.v`, and `counter.v`. These were restructured into pipelined stages:
 
 
@@ -122,13 +123,16 @@ l FSM-based codebase was modular, with separate modules like `alu.v`, `controlle
  
 
 - **ID Stage (Instruction Decode)**: Combined controller logic and register file access (`reg_32`). Decoded instructions based on opcodes and generated control signals. Data was passed through `IF_ID_reg` pipeline registers to maintain synchronization.
+
  ![image](https://github.com/user-attachments/assets/387ce23e-5191-4ce2-ad69-21ee064f7c7a)
 
 
 
   
 - **EX Stage (Execute)**: Combined `accum` and `alu` logic. Arithmetic and control operations were performed based on decoded signals. Forwarding and synchronization were handled within this stage, and data/control were passed via `ID_EX_reg`.
+
 ![image](https://github.com/user-attachments/assets/6bdb81bf-6cd3-448d-8a7d-cf22f37bb4d9)
+
 ![image](https://github.com/user-attachments/assets/538e24d4-8372-450b-b9e0-42c54eefce96)
 
 
@@ -139,10 +143,12 @@ To mimic a real processor architecture more accurately, MEM (Memory Access) and 
 
 
 - **MEM Stage**: Handled ROM/RAM read operations based on opcode. Conditional assignments (e.g., LDA) determined whether `in_mem_data` was routed to the register or accumulator. Controlled using `MEM_WB_reg`.
+
 ![image](https://github.com/user-attachments/assets/0b98fa68-e5cb-4a02-a0dd-34d50b18450f)
  
 
 - **WB Stage**: Managed data writes to either RAM or register file. Write paths were separated using `write`, `dest`, and `data` wires. Final data was written back to the memory blocks instantiated in the top module.
+
  ![image](https://github.com/user-attachments/assets/df50765a-f814-44ec-aa86-0fb5163ab7c2)
 
 
@@ -159,8 +165,11 @@ Once the pipeline was complete:
 
 ### Forwarding & Hazard Mitigation
 
+
 ![image](https://github.com/user-attachments/assets/00e88b14-d2bb-477d-a3f6-a54157dfaa50)
+
 ![image](https://github.com/user-attachments/assets/05a46450-9d04-4191-b8d2-3ff977fd7251)
+
 ![image](https://github.com/user-attachments/assets/6eb8820a-74c2-4247-a797-91113563cb03)
 
 
