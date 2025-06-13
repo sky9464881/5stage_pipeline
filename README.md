@@ -117,7 +117,7 @@ l FSM-based codebase was modular, with separate modules like `alu.v`, `controlle
 
 
 - **IF Stage (Instruction Fetch)**: Integrated `rom`, `counter`, and `addr_mux` functionalities. The PC was implemented as an 8-bit register, with stall and halt conditions controlling PC advancement and instruction validity. Immediate value handling for 2-byte instructions was also included.
-- 
+  
 ![image](https://github.com/user-attachments/assets/b9b96e78-f7ab-4550-aee6-7f61866c1f27)
  
 
