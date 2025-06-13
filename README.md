@@ -1,7 +1,7 @@
 # 8-bit FSM CPU with 5-Stage Pipelining and Hardware Interaction
 
 ### Authors
-- Hwapyung Kim
+- Hwapyeong Kim
 - Junsoo Moon
 - Wonho Lee
 
