@@ -114,32 +114,36 @@ This project began with a simple FSM-based single-cycle CPU model and was progre
 The initia![image](https://github.com/user-attachments/assets/17f7169c-3d79-4faa-980b-e737875eae51)
 l FSM-based codebase was modular, with separate modules like `alu.v`, `controller.v`, `accum.v`, `addr_mux.v`, and `counter.v`. These were restructured into pipelined stages:
 
-![image](https://github.com/user-attachments/assets/b9b96e78-f7ab-4550-aee6-7f61866c1f27)
+
 
 - **IF Stage (Instruction Fetch)**: Integrated `rom`, `counter`, and `addr_mux` functionalities. The PC was implemented as an 8-bit register, with stall and halt conditions controlling PC advancement and instruction validity. Immediate value handling for 2-byte instructions was also included.
-
-  ![image](https://github.com/user-attachments/assets/387ce23e-5191-4ce2-ad69-21ee064f7c7a)
+![image](https://github.com/user-attachments/assets/b9b96e78-f7ab-4550-aee6-7f61866c1f27)
+ 
 
 - **ID Stage (Instruction Decode)**: Combined controller logic and register file access (`reg_32`). Decoded instructions based on opcodes and generated control signals. Data was passed through `IF_ID_reg` pipeline registers to maintain synchronization.
+ ![image](https://github.com/user-attachments/assets/387ce23e-5191-4ce2-ad69-21ee064f7c7a)
 
 
-![image](https://github.com/user-attachments/assets/6bdb81bf-6cd3-448d-8a7d-cf22f37bb4d9)
-![image](https://github.com/user-attachments/assets/538e24d4-8372-450b-b9e0-42c54eefce96)
 
   
 - **EX Stage (Execute)**: Combined `accum` and `alu` logic. Arithmetic and control operations were performed based on decoded signals. Forwarding and synchronization were handled within this stage, and data/control were passed via `ID_EX_reg`.
+![image](https://github.com/user-attachments/assets/6bdb81bf-6cd3-448d-8a7d-cf22f37bb4d9)
+![image](https://github.com/user-attachments/assets/538e24d4-8372-450b-b9e0-42c54eefce96)
+
 
 ### Step 2: Expanding to 5-Stage Pipeline
 
 To mimic a real processor architecture more accurately, MEM (Memory Access) and WB (Write Back) stages were separated:
 
-![image](https://github.com/user-attachments/assets/0b98fa68-e5cb-4a02-a0dd-34d50b18450f)
+
 
 - **MEM Stage**: Handled ROM/RAM read operations based on opcode. Conditional assignments (e.g., LDA) determined whether `in_mem_data` was routed to the register or accumulator. Controlled using `MEM_WB_reg`.
-
-  ![image](https://github.com/user-attachments/assets/df50765a-f814-44ec-aa86-0fb5163ab7c2)
+![image](https://github.com/user-attachments/assets/0b98fa68-e5cb-4a02-a0dd-34d50b18450f)
+ 
 
 - **WB Stage**: Managed data writes to either RAM or register file. Write paths were separated using `write`, `dest`, and `data` wires. Final data was written back to the memory blocks instantiated in the top module.
+ ![image](https://github.com/user-attachments/assets/df50765a-f814-44ec-aa86-0fb5163ab7c2)
+
 
 Data dependencies and timing alignment were preserved by introducing intermediate pipeline registers (`EX_MEM_reg`, `MEM_WB_reg`) to ensure stable signal propagation at every clock cycle.
 
