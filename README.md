@@ -1,9 +1,9 @@
 # 8-bit FSM CPU with 5-Stage Pipelining and Hardware Interaction
 
 ### Authors
-- 2021742027 Hwapyung Kim
-- 2020742022 Junsoo Moon
-- 2021742038 Wonho Lee
+- Hwapyung Kim
+- Junsoo Moon
+- Wonho Lee
 
 ---
 
